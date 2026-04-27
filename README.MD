@@ -37,3 +37,28 @@ Setelah melakukan profiling dan menemukan bottleneck, dilakukan refactoring pada
 
 Bukti Profiling Sesudah Optimasi:
 ![VisualVM Profiling - After Optimization](images/profiling_highest_gpa_after.png)
+
+## Reflection
+
+1. What is the difference between the approach of performance testing with JMeter and profiling with IntelliJ Profiler in the context of optimizing application performance?
+JMeter melakukan black-box testing yang berfokus pada performa aplikasi dari sudut pandang pengguna (luar), seperti mengukur response time, throughput, dan error rate saat diberi beban tertentu. Sebaliknya, Profiler (IntelliJ Profiler/VisualVM) melakukan *white-box analysis* yang melihat ke dalam internal aplikasi untuk memantau penggunaan CPU, memori, dan durasi eksekusi setiap metode/fungsi secara spesifik. JMeter memberi tahu kita *bahwa* aplikasi lambat, sedangkan Profiler memberi tahu kita *bagian kode mana* yang membuatnya lambat.
+
+2. How does the profiling process help you in identifying and understanding the weak points in your application?
+Proses profiling membantu dengan cara memetakan penggunaan sumber daya CPU ke baris kode tertentu. Melalui fitur seperti Call Tree atau Flame Graph, kita bisa melihat metode mana yang memakan waktu eksekusi paling besar (hotspots). Misalnya, dalam tugas ini, profiling berhasil menunjukkan bahwa inefisiensi pada `joinStudentNames` dan `findStudentWithHighestGpa` adalah penyebab utama tingginya beban CPU.
+
+3. Do you think IntelliJ Profiler is effective in assisting you to analyze and identify bottlenecks in your application code?
+Ya, sangat efektif. Dengan profiler, kita tidak perlu menebak-nebak bagian mana yang bermasalah. Data visual yang disajikan mempermudah identifikasi *bottleneck* seperti *N+1 query problem* atau penggunaan memori yang tidak efisien akibat pembuatan objek String yang berulang-ulang, sehingga proses perbaikan kode menjadi lebih terukur.
+
+4. What are the main challenges you face when conducting performance testing and profiling, and how do you overcome these challenges?
+Tantangan utamanya adalah memastikan lingkungan pengujian tetap konsisten agar data tidak bias oleh aplikasi lain yang berjalan di komputer. Selain itu, keterbatasan fitur pada IntelliJ Community Edition mengharuskan penggunaan alat eksternal seperti VisualVM. Saya mengatasinya dengan mempelajari integrasi VisualVM dan memastikan aplikasi berjalan dalam kondisi beban yang serupa (menggunakan JMeter CLI) di setiap sesi pengujian.
+
+5. What are the main benefits you gain from using IntelliJ Profiler for profiling your application code?
+Manfaat utamanya adalah kemampuan untuk melakukan deep dive ke dalam eksekusi thread secara real-time. Kita bisa mendapatkan metrik presisi mengenai metode yang paling sering dipanggil dan durasi eksekusinya, yang sangat membantu dalam membuktikan apakah optimasi yang dilakukan benar-benar memberikan dampak signifikan pada level kode.
+
+6. How do you handle situations where the results from profiling with IntelliJ Profiler are not entirely consistent with findings from performance testing using JMeter?
+Jika terjadi ketidakkonsistenan (misalnya JMeter menunjukkan lambat tapi Profiler terlihat normal), saya akan memeriksa faktor eksternal seperti latensi jaringan, koneksi database, atau konfigurasi server-side (seperti limit pada Tomcat). Saya juga akan melakukan *profiling* ulang dengan beban yang lebih besar di JMeter untuk memastikan *bottleneck* internal benar-benar muncul di bawah tekanan tinggi.
+
+7. What strategies do you implement in optimizing application code after analyzing results from performance testing and profiling? How do you ensure the changes you make do not affect the application's functionality?
+(1) Mengurangi akses berulang ke database (menyelesaikan N+1 query), 
+8. (2) Menggunakan struktur data yang lebih efisien (seperti `StringBuilder` atau Stream API)
+9. (3) Mendelegasikan komputasi berat ke database jika memungkinkan. 
