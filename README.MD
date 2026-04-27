@@ -10,3 +10,8 @@
 
 ### JMeter CLI Execution
 ![JMeter CLI](images/jmeter_cli.png)
+
+### Profiling & Optimization Analysis
+
+1. Endpoint `/all-student` (Before Optimization)
+![VisualVM Profiling - All Student Before](images/profiling_all_student_before.png)
