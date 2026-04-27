@@ -1,5 +1,4 @@
 ### JMeter Performance Testing Results
-
 1. Endpoint `/all-student`
 ![JMeter All Student](images/jmeter_all_student.png)
 
@@ -8,3 +7,6 @@
 
 3. Endpoint `/highest-gpa`
 ![JMeter Highest GPA](images/jmeter_highest_gpa.png)
+
+### JMeter CLI Execution
+![JMeter CLI](images/jmeter_cli.png)
